@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./version one",
+        "./version two"
+    ]
+}
