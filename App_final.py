@@ -180,6 +180,10 @@ def build_two_models(polyA: Path, polyB: Path, stem: str):
 def index():
     return render_template("index.html")
 
+# Serve uploaded 2D plan images
+@app.route("/uploads/<path:filename>")
+def serve_upload(filename):
+    return send_from_directory(UPLOAD_DIR, filename)
 
 @app.route("/upload", methods=["POST"])
 def upload():
@@ -205,8 +209,9 @@ def upload():
     return render_template(
         "result.html",
         name=stem,
-        modelA=glbA.name,
-        modelB=glbB.name,
+        modelA=glbA.name,          # or os.path.basename(glbA)
+        modelB=glbB.name,          # or os.path.basename(glbB)
+        plan_filename=filename,    # used for the 2D plan <img>
     )
 
 

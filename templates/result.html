@@ -24,14 +24,39 @@
       opacity: 0.75;
       margin-bottom: 10px;
     }
+    .top-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 16px;
+    }
+    .plan-wrapper {
+      max-width: 640px;
+      width: 100%;
+    }
+    .plan-title {
+      text-align: center;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+    .plan-wrapper img {
+      display: block;
+      max-width: 100%;
+      border-radius: 8px;
+      border: 1px solid #333;
+      margin: 0 auto;
+    }
     .view-row {
       display: flex;
       gap: 10px;
       justify-content: space-between;
       margin-top: 10px;
+      flex-wrap: wrap;
     }
     .viewer-wrapper {
       flex: 1;
+      min-width: 320px;
       display: flex;
       flex-direction: column;
     }
@@ -69,17 +94,26 @@
 </head>
 <body>
   <div class="container">
-    <h1>download</h1>
+    <h1>{{ name }}</h1>
     <div class="subtitle">
-      Left: DETAILED MODEL &nbsp; | &nbsp;
-      Right: MODEL
+      2D Plan + Two 3D Reconstructions (Model A & Model B)
     </div>
 
+    <!-- 2D PLAN -->
+    <div class="top-row">
+      <div class="plan-wrapper">
+        <div class="plan-title">2D Plan</div>
+        <img src="{{ url_for('serve_upload', filename=plan_filename) }}"
+             alt="Uploaded 2D Plan">
+      </div>
+    </div>
+
+    <!-- TWO 3D MODELS -->
     <div class="view-row">
       <div class="viewer-wrapper">
         <div class="viewer-title">Model A – Improved UNet + Coloured 3D</div>
         <model-viewer
-          src="/models/{{ modelA }}"
+          src="{{ url_for('serve_model', filename=modelA) }}"
           camera-controls
           auto-rotate
           ar
@@ -92,7 +126,7 @@
       <div class="viewer-wrapper">
         <div class="viewer-title">Model B – Second UNet + Different Style</div>
         <model-viewer
-          src="/models/{{ modelB }}"
+          src="{{ url_for('serve_model', filename=modelB) }}"
           camera-controls
           auto-rotate
           ar
@@ -105,8 +139,8 @@
 
     <div class="downloads">
       Download:
-      <a href="/models/{{ modelA }}" download>Model A (GLB)</a> |
-      <a href="/models/{{ modelB }}" download>Model B (GLB)</a>
+      <a href="{{ url_for('serve_model', filename=modelA) }}" download>Model A (GLB)</a> |
+      <a href="{{ url_for('serve_model', filename=modelB) }}" download>Model B (GLB)</a>
     </div>
   </div>
 </body>
