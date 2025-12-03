@@ -20,8 +20,8 @@ BATCH       = 1            # keep 1 on MPS to avoid OOM
 EPOCHS      = 40
 LR          = 1e-3
 BASE_DIR    = Path(__file__).resolve().parent
-ROOT        = BASE_DIR / "version one" / "data"       # expect data/images/{train,val}, data/masks/{train,val}
-SAVE_DIR    = BASE_DIR / "version one" / "runs_unet"
+ROOT        = BASE_DIR / "data"       # expect data/images/{train,val}, data/masks/{train,val}
+SAVE_DIR    = BASE_DIR / "runs_unet"
 
 DEVICE = "mps" if torch.backends.mps.is_available() else \
          ("cuda" if torch.cuda.is_available() else "cpu")

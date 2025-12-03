@@ -19,8 +19,9 @@ IMG_SIZE    = 768         # smaller -> less MPS memory (try 768 if you can)
 BATCH       = 1            # keep 1 on MPS to avoid OOM
 EPOCHS      = 60
 LR          = 1e-3
-ROOT        = "version two/improved/data"       # expect data/images/{train,val}, data/masks/{train,val}
-SAVE_DIR    = "version two/runs_unet_improved"
+BASE_DIR    = Path(__file__).resolve().parent
+ROOT        = BASE_DIR /"improved"/"data"       # expect data/images/{train,val}, data/masks/{train,val}
+SAVE_DIR    = BASE_DIR /"runs_unet_improved"
 
 DEVICE = "mps" if torch.backends.mps.is_available() else \
          ("cuda" if torch.cuda.is_available() else "cpu")

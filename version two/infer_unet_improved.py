@@ -12,12 +12,14 @@ import torch.nn as nn
 # ----------------------------------------------------------------------
 CLASSES = ["background", "wall", "door", "window", "room"]  # 0..4
 IMG_SIZE = 640
-CKPT_PATH = "/version two/runs_unet_improved/best.pt"  # <-- change if your best model lives elsewhere
+
+# >>> All file paths now relative to this file <<<
+BASE_DIR = Path(__file__).resolve().parent
+CKPT_PATH = str(BASE_DIR / "runs_unet_improved" / "best.pt")  # model path, relative to this file
+
 
 DEVICE = (
-    "mps"
-    if torch.backends.mps.is_available()
-    else ("cuda" if torch.cuda.is_available() else "cpu")
+    "cuda" if torch.cuda.is_available() else "cpu"
 )
 
 # Color map for visualization (BGR)
@@ -165,9 +167,9 @@ def run(
     x, orig_hw, _ = preprocess(img)
 
     with torch.no_grad():
-        if DEVICE in ("cuda", "mps"):
-            amp_device = "cuda" if DEVICE == "cuda" else "mps"
-            with torch.autocast(device_type=amp_device, dtype=torch.float16):
+    # Use autocast only on CUDA; skip it on MPS/CPU
+        if DEVICE == "cuda":
+            with torch.autocast(device_type="cuda", dtype=torch.float16):
                 out = net(x)
         else:
             out = net(x)
@@ -250,12 +252,15 @@ def run_folder(folder_path: str, ckpt: str = CKPT_PATH, out_dir: str = "pred_une
 
 
 if __name__ == "__main__":
-    # change this to any image you want to test
-    #run(
-    #    "/Users/senakshikrishnamurthy/Desktop/DS/606 capstone/Sena_PROJECT/FINAL/improved/data/images/test/5_16.jpg"
-    #)
+    # Example: run a single test image inside your repo
+    # run(BASE_DIR / "version two" / "data" / "images" / "test" / "5_16.jpg")
+
+    # Batch example: images in version two/data/images/test,
+    # outputs in version two/pred_unet
+    test_folder = BASE_DIR / "improved"/"data" / "images" / "test"
+    pred_dir    = BASE_DIR / "pred_unet_improved"
     run_folder(
-        "version two/improved/data/images/test",
+        test_folder,
         ckpt=CKPT_PATH,
-        out_dir="version two/pred_unet_improved"
+        out_dir=str(pred_dir)
     )

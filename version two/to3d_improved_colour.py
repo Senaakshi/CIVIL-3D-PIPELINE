@@ -7,6 +7,8 @@ from shapely.geometry import Polygon
 from shapely.ops import unary_union
 import trimesh
 
+BASE_DIR = Path(__file__).resolve().parent
+
 # --- units and base heights (tweak as you like) ---
 PX_TO_M  = 0.01   # 1 px = 1 cm
 WALL_H_BASE   = 3.0    # wall height
@@ -260,7 +262,7 @@ def build_mesh(json_path, out_path):
     print("3D saved →", out_path)
 
 
-def build_mesh_folder(json_dir, out_dir="out_3d"):
+def build_mesh_folder(json_dir, out_dir="out_3d_improved_colour"):
     """
     Batch version:
       - Looks for all *_polygons.json in json_dir
@@ -298,13 +300,9 @@ def build_mesh_folder(json_dir, out_dir="out_3d"):
 
 
 if __name__ == "__main__":
-    # --- OPTION 1: single file ---
-    # jp  = "pred_unet_improved/0_1_polygons.json"
-    # out = "out_3d/0_1.glb"
-    # build_mesh(jp, out)
 
-    # --- OPTION 2: whole folder of polygons JSONs ---
+    # --- : whole folder of polygons JSONs ---
     build_mesh_folder(
-        json_dir="version two/pred_unet_improved",
-        out_dir="version/two/out_3d_improved_colour"
+        json_dir= BASE_DIR/"pred_unet_improved",   # folder where *_polygons.json live
+        out_dir=BASE_DIR/"out_3d_improved_colour"                # folder to store GLBs
     )

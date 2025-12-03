@@ -8,6 +8,7 @@ import torch
 from flask import Flask, request, render_template, send_from_directory
 
 # Add current directory to path to resolve local imports
+import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 

@@ -6,6 +6,8 @@ from shapely.geometry import Polygon
 from shapely.ops import unary_union
 import trimesh
 
+BASE_DIR = Path(__file__).resolve().parent 
+
 PX_TO_M = 0.01   # 1 px = 1 cm (tweak)
 WALL_H  = 3.0
 FLOOR_T = 0.15
@@ -125,14 +127,10 @@ def build_mesh_folder(json_dir, out_dir="out_3d"):
 
 
 if __name__ == "__main__":
-    # --- OPTION 1: single file ---
-    # jp  = "pred_unet_improved/5_16_polygons.json"
-    # out = "out_3d/5_16.glb"
-    # build_mesh(jp, out)
 
-    # --- OPTION 2: whole folder of polygons JSONs ---
+    # : whole folder of polygons JSONs ---
     build_mesh_folder(
-        json_dir="version one/pred_unet",   # folder where *_polygons.json live
-        out_dir="out_3d"                # folder to store GLBs
+        json_dir= BASE_DIR /"pred_unet",   # folder where *_polygons.json live
+        out_dir=BASE_DIR /"out_3d"                # folder to store GLBs
     )
 
