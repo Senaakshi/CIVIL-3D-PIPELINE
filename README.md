@@ -143,4 +143,14 @@ Mobile AR frameworks
 - Point-cloud export
 - Integration with HoloLens / Vision Pro                                    
 
+# Results:
+### Final result of the web app:
+<img width="3394" height="1710" alt="image" src="https://github.com/user-attachments/assets/d58a847d-1207-42fe-a9a2-42f3346db086" />
+### Version one result:
+<img width="1338" height="1146" alt="image" src="https://github.com/user-attachments/assets/a0372852-819e-48ba-9e8e-2b3c01deec9c" />
+### version two result:
+<img width="1250" height="958" alt="image" src="https://github.com/user-attachments/assets/ba4a2180-483e-428d-af00-2c31ee84ddcc" />
+
+
+
 
